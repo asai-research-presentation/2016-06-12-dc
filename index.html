@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Exploiting Search Space Structure in Classical Planning: Analyses and Algorithms (DC talk)</title>
+<!-- 2016-06-12 日 12:00 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Masataro Asai" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="css/layout.css" />
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.loupe.min.js"></script>
+<script type="text/javascript" src="js/jgestures/jgestures.min.js"></script>
+<script type="text/javascript" src="js/code.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Exploiting Search Space Structure in Classical Planning: Analyses and Algorithms (DC talk)</h1>
+<div class="outline-text-1">
+<p>
+15 min + 5 min question
+</p>
+
+<p>
+POSTER 4ft (122cm) wide x 6ft (183 cm) tall
+</p>
+
+<div class="larger">
+<div class="center">
+<p>
+Masataro Asai
+</p>
+
+<p>
+2nd year in Ph.D program (2 years to go)
+</p>
+
+<p>
+University of Tokyo
+</p>
+
+<p>
+　
+</p>
+
+<p>
+Short talk (15min)
+</p>
+</div>
+
+</div>
+
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>What I've been doing (5 min)
+<ul class="org-ul">
+<li>primarily in classical planning
+</li>
+<li>Briefly summarize 3 papers
+</li>
+</ul>
+</li>
+<li>How to form a clean thesis &amp; what I'm insterested in (10 min)
+<ul class="org-ul">
+<li>To construct a consistent story →
+</li>
+<li><i>Theory unifying all satisficing heuristic search</i>
+</li>
+<li><i>4th paper</i> : aiming to be a non ad-hoc macro paper
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> </h2>
+<div class="outline-text-2" id="text-2">
+<div class="xlarge">
+<div class="center">
+<p>
+Prior Work
+</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> CELL-ASSEMBLY system</h2>
+<div class="outline-text-2" id="text-3">
+<div class="note">
+<p>
+Asai, M.; Fukunaga, A: 2014. Fully Automated Cyclic Planning for Large-Scale Manufacturing Domains. In ICAPS2014.
+</p>
+
+</div>
+
+
+<div class="figure">
+<p><img src="img/assemble-icaps14-intro.png" alt="assemble-icaps14-intro.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Issues addressed</h3>
+<div class="outline-text-3" id="text-3-1">
+
+<div class="figure">
+<p><img src="img/assemble-icaps14.png" alt="assemble-icaps14.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> ICAPS15 paper</h2>
+<div class="outline-text-2" id="text-4">
+<div class="resume">
+<p>
+In this work, we generalized the proposed method by detecting and
+categorizing the logical structure which forms each loop.
+For example, programs do not know that cars consists of several parts such as doors, engines and tires.
+</p>
+
+</div>
+
+
+<div class="figure">
+<p><img src="img/assemble-keps14-icaps15.png" alt="assemble-keps14-icaps15.png" />
+</p>
+</div>
+
+<div class="note">
+<p>
+Asai, M.; Fukunaga, A: 2015. Solving Large-Scale Planning Problems by Decomposition and Macro Generation. In ICAPS2015.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> AAAI16 paper (visit my 2nd poster session)</h2>
+<div class="outline-text-2" id="text-5">
+
+<div class="figure">
+<p><img src="img/aaai16-1-1.png" alt="aaai16-1-1.png" />
+</p>
+</div>
+
+<div class="note">
+<p>
+Asai, M.; Fukunaga, A: 2016. Tiebreaking Strategies for A* Search: How to Explore the Final Frontier. In AAAI-2016.
+</p>
+
+</div>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> AAAI16 paper (visit my 2nd poster session)</h3>
+<div class="outline-text-3" id="text-5-1">
+
+<div class="figure">
+<p><img src="img/aaai16-1-2.png" alt="aaai16-1-2.png" />
+</p>
+</div>
+
+<div class="note">
+<p>
+Asai, M.; Fukunaga, A: 2016. Tiebreaking Strategies for A* Search: How to Explore the Final Frontier. In AAAI-2016.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Investigating <i>h</i>-tiebreaking in A*</h3>
+<div class="outline-text-3" id="text-5-2">
+
+<div class="figure">
+<p><img src="img/aaai16-2.png" alt="aaai16-2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Investigating <i>h</i>-tiebreaking in A*</h3>
+<div class="outline-text-3" id="text-5-3">
+
+<div class="figure">
+<p><img src="img/aaai16-2-1.png" alt="aaai16-2-1.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Investigating <i>h</i>-tiebreaking in A*</h3>
+<div class="outline-text-3" id="text-5-4">
+
+<div class="figure">
+<p><img src="img/aaai16-2-2.png" alt="aaai16-2-2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Investigating <i>h</i> + LIFO/FIFO tiebreaking in A*</h3>
+<div class="outline-text-3" id="text-5-5">
+
+<div class="figure">
+<p><img src="img/plateau-3-0.png" alt="plateau-3-0.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="section-number-3">5.6</span> Investigating <i>h</i> + LIFO/FIFO tiebreaking in A*</h3>
+<div class="outline-text-3" id="text-5-6">
+
+<div class="figure">
+<p><img src="img/plateau-3-1.png" alt="plateau-3-1.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-7" class="outline-3">
+<h3 id="sec-5-7"><span class="section-number-3">5.7</span> A* with <i>h</i> + Depth Diversification</h3>
+<div class="outline-text-3" id="text-5-7">
+
+<div class="figure">
+<p><img src="img/aaai16-3.png" alt="aaai16-3.png" />
+</p>
+</div>
+
+<p>
+annd "plateau search = satisficing planning"
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> </h2>
+<div class="outline-text-2" id="text-6">
+<div class="xlarge">
+<div class="center">
+<p>
+Future Work
+</p>
+
+<p>
+　
+</p>
+</div>
+
+</div>
+
+<p>
+　
+</p>
+
+<p>
+　
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Earmuffs Required</h2>
+<div class="outline-text-2" id="text-7">
+<div class="xlarge">
+<p>
+
+</p>
+
+<div class="center">
+<p>
+Future Work
+</p>
+
+<p>
+== Research IDEAs : not yet fully developped
+</p>
+</div>
+<div class="alignright">
+<p>
+
+</p>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Toward Thesis Proposals</h2>
+<div class="outline-text-2" id="text-8">
+<div class="larger">
+<p>
+1st, 2nd paper: <b>Macros</b>, satisficing search
+</p>
+
+<p>
+3rd paper: A*, tiebreaking, <b>plateau</b>, optimising search
+</p>
+
+<div class="alignright">
+<p>
+→ Weak connections between the topics
+</p>
+
+<p>
+Requires a unified story
+</p>
+
+</div>
+
+<div class="center">
+<ul class="org-ul">
+<li><b>(macro ∩ plateau analysis) == search space</b>
+</li>
+</ul>
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> A* tiebreaking [RD RO] paper was about search space</h2>
+<div class="outline-text-2" id="text-9">
+
+<div class="figure">
+<p><img src="img/aaai16-3.png" alt="aaai16-3.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Macro operators changes the search space structure</h2>
+<div class="outline-text-2" id="text-10">
+
+<div class="figure">
+<p><img src="img/macro/search0.png" alt="search0.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Macro operators changes the search space structure</h2>
+<div class="outline-text-2" id="text-11">
+
+<div class="figure">
+<p><img src="img/macro/search1.png" alt="search1.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Proposal: Unifying Framework for Analyzing Search Space</h2>
+<div class="outline-text-2" id="text-12">
+
+<div class="figure">
+<p><img src="img/triangle.png" alt="triangle.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> Proposal: Unifying Framework for Analyzing Search Space</h2>
+<div class="outline-text-2" id="text-13">
+
+<div class="figure">
+<p><img src="img/triangle0.png" alt="triangle0.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> Proposal: Unifying Framework for Analyzing Search Space</h2>
+<div class="outline-text-2" id="text-14">
+
+<div class="figure">
+<p><img src="img/triangle1.png" alt="triangle1.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> </h2>
+<div class="outline-text-2" id="text-15">
+<div class="xlarge">
+<div class="center">
+<p>
+Percolation Theory
+</p>
+</div>
+
+</div>
+</div>
+
+<div id="outline-container-sec-15-1" class="outline-3">
+<h3 id="sec-15-1"><span class="section-number-3">15.1</span> Example: Percolation in 2-dimentional grids</h3>
+<div class="outline-text-3" id="text-15-1">
+<p>
+A node is either <b>occupied</b> or <b>unoccupied</b>
+</p>
+
+
+<div class="figure">
+<p><img src="img/percolate/percolated0.png" alt="percolated0.png" />
+</p>
+</div>
+
+<div class="alignright">
+<div class="larger">
+<ul class="org-ul">
+<li>Key interst: <b>when/how</b> a graph percolates?
+</li>
+</ul>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15-2" class="outline-3">
+<h3 id="sec-15-2"><span class="section-number-3">15.2</span> Bond (edge) / Site (node) percolation</h3>
+<div class="outline-text-3" id="text-15-2">
+
+<div class="figure">
+<p><img src="img/static/site-bond.gif" alt="site-bond.gif" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15-3" class="outline-3">
+<h3 id="sec-15-3"><span class="section-number-3">15.3</span> Percolation described by occupation ratio <i>r</i></h3>
+<div class="outline-text-3" id="text-15-3">
+
+<div class="figure">
+<p><img src="img/percolate/cluster0.png" alt="cluster0.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15-4" class="outline-3">
+<h3 id="sec-15-4"><span class="section-number-3">15.4</span> Percolation described by occupation ratio <i>r</i></h3>
+<div class="outline-text-3" id="text-15-4">
+
+<div class="figure">
+<p><img src="img/percolate/cluster1.png" alt="cluster1.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15-5" class="outline-3">
+<h3 id="sec-15-5"><span class="section-number-3">15.5</span> Percolation described by occupation ratio <i>r</i></h3>
+<div class="outline-text-3" id="text-15-5">
+
+<div class="figure">
+<p><img src="img/percolate/cluster2.png" alt="cluster2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15-6" class="outline-3">
+<h3 id="sec-15-6"><span class="section-number-3">15.6</span> Percolation described by occupation ratio <i>r</i></h3>
+<div class="outline-text-3" id="text-15-6">
+<p>
+Generates a connected cluster with complex shape
+</p>
+
+
+<div class="figure">
+<p><img src="img/percolate/cluster3.png" alt="cluster3.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15-7" class="outline-3">
+<h3 id="sec-15-7"><span class="section-number-3">15.7</span> Phase Transition</h3>
+<div class="outline-text-3" id="text-15-7">
+
+<div class="figure">
+<p><img src="img/percolate/cluster4.png" alt="cluster4.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15-8" class="outline-3">
+<h3 id="sec-15-8"><span class="section-number-3">15.8</span> Macros may be shifting the ratio to the right</h3>
+<div class="outline-text-3" id="text-15-8">
+
+<div class="figure">
+<p><img src="img/percolate/cluster5.png" alt="cluster5.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15-9" class="outline-3">
+<h3 id="sec-15-9"><span class="section-number-3">15.9</span> Forward Search : Increasing <i>r</i> as the search progresses</h3>
+<div class="outline-text-3" id="text-15-9">
+
+<div class="figure">
+<p><img src="img/percolate/cluster6.png" alt="cluster6.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15-10" class="outline-3">
+<h3 id="sec-15-10"><span class="section-number-3">15.10</span> Open Questions</h3>
+<div class="outline-text-3" id="text-15-10">
+<ul class="org-ul">
+<li><b>Prove the connection between macro-operators and critical value</b>
+<ul class="org-ul">
+<li>I am testing if randomly generated <b>Junk Macros</b> improve the performance
+<ul class="org-ul">
+<li><b>Ongoing work &#x2014; <i>positive results</i> (next slide)</b>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><b>How <i>existing macro-approaches</i> change the connectivity?</b>
+<ul class="org-ul">
+<li>MacroFF(Botea05), Marvin(Coles04,07) MUM(Chrpa14), CAP(Asai15), BLOMA(Siddiqui15)
+</li>
+</ul>
+</li>
+<li><b>What is the <i>r<sub>c</sub></i> of each domain?</b>
+<ul class="org-ul">
+<li>critical value of Logistics is X, Barman is Y &#x2026;
+</li>
+</ul>
+</li>
+<li><b>At which <i>r</i> does each search algorithm find a solution?</b>
+<ul class="org-ul">
+<li>Lookahead search, GBFS, Type-GBFS, A*, Random Walk&#x2026;
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-15-10-1" class="outline-4">
+<h4 id="sec-15-10-1"><span class="section-number-4">15.10.1</span> Preliminary results on Junk Macros</h4>
+<div class="outline-text-4" id="text-15-10-1">
+
+<div class="figure">
+<p><img src="img/percolate/junk.png" alt="junk.png" />
+</p>
+</div>
+
+<div class="alignright">
+<p>
+Promising direction!
+</p>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> Unifying Framework for Analyzing Search Space</h2>
+<div class="outline-text-2" id="text-16">
+
+<div class="figure">
+<p><img src="img/triangle2.png" alt="triangle2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> </h2>
+<div class="outline-text-2" id="text-17">
+<div class="xlarge">
+<div class="center">
+<p>
+Fractals
+</p>
+</div>
+
+</div>
+
+<div class="alignright">
+<p>
+No time, only described briefly
+</p>
+
+</div>
+</div>
+
+<div id="outline-container-sec-17-1" class="outline-3">
+<h3 id="sec-17-1"><span class="section-number-3">17.1</span> Fractals</h3>
+<div class="outline-text-3" id="text-17-1">
+<p>
+Sierpinsky's Gasket, Tree (L-system), Koch Curve
+</p>
+
+
+<div class="container-fluid">
+<div class="row-fluid">
+<div class="span6">
+
+<div class="figure">
+<p><img src="img/static/sierpinski.gif" alt="sierpinski.gif" />
+</p>
+</div>
+
+</div>
+<div class="span6">
+
+<div class="figure">
+<p><img src="img/static/koch.gif" alt="koch.gif" />
+</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-17-2" class="outline-3">
+<h3 id="sec-17-2"><span class="section-number-3">17.2</span> Fractal Dimension: How many nodes are included when the <b><i>scale</i></b> changes?</h3>
+<div class="outline-text-3" id="text-17-2">
+<p>
+Takes Fractional value; != Space Dimension
+</p>
+
+
+<div class="figure">
+<p><img src="img/fractals/dimention.png" alt="dimention.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-17-3" class="outline-3">
+<h3 id="sec-17-3"><span class="section-number-3">17.3</span> Fractals are defined by generative rules: example</h3>
+<div class="outline-text-3" id="text-17-3">
+
+<div class="figure">
+<p><img src="img/fractals/ba.png" alt="ba.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-17-4" class="outline-3">
+<h3 id="sec-17-4"><span class="section-number-3">17.4</span> Fractals are defined by generative rules: example</h3>
+<div class="outline-text-3" id="text-17-4">
+
+<div class="figure">
+<p><img src="img/fractals/dla.png" alt="dla.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-17-5" class="outline-3">
+<h3 id="sec-17-5"><span class="section-number-3">17.5</span> Fractals are defined by generative rules: example</h3>
+<div class="outline-text-3" id="text-17-5">
+
+<div class="figure">
+<p><img src="img/fractals/eden.png" alt="eden.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-17-6" class="outline-3">
+<h3 id="sec-17-6"><span class="section-number-3">17.6</span> <b><i>Search space</i></b> is also defined by expansion rules</h3>
+<div class="outline-text-3" id="text-17-6">
+
+<div class="figure">
+<p><img src="img/fractals/eden-2.png" alt="eden-2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-17-7" class="outline-3">
+<h3 id="sec-17-7"><span class="section-number-3">17.7</span> Connections between Fractals and Search Algorithms</h3>
+<div class="outline-text-3" id="text-17-7">
+
+<div class="figure">
+<p><img src="img/fractals/fractal.png" alt="fractal.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-17-8" class="outline-3">
+<h3 id="sec-17-8"><span class="section-number-3">17.8</span> Connections between Fractals and Search Algorithms</h3>
+<div class="outline-text-3" id="text-17-8">
+
+<div class="figure">
+<p><img src="img/fractals/fractal2.png" alt="fractal2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-17-9" class="outline-3">
+<h3 id="sec-17-9"><span class="section-number-3">17.9</span> Connections between Fractals and Search Algorithms</h3>
+<div class="outline-text-3" id="text-17-9">
+
+<div class="figure">
+<p><img src="img/fractals/fractal3.png" alt="fractal3.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-17-10" class="outline-3">
+<h3 id="sec-17-10"><span class="section-number-3">17.10</span> Connections between Fractals and Percolation</h3>
+<div class="outline-text-3" id="text-17-10">
+
+<div class="figure">
+<p><img src="img/fractals/cluster.png" alt="cluster.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> Unifying Framework for Analyzing Search Space</h2>
+<div class="outline-text-2" id="text-18">
+
+<div class="figure">
+<p><img src="img/triangle3.png" alt="triangle3.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> Conclusion: Thesis Abstract</h2>
+<div class="outline-text-2" id="text-19">
+<div class="larger">
+<ul class="org-ul">
+<li><b>Establish a framework</b> for analysing the search behavior based on percolation theory
+</li>
+<li><b>Propose paper 1,2,3</b>
+</li>
+<li><b>Analyze paper 1,2,3</b> using <b>percolation theory</b>
+<ul class="org-ul">
+<li>Macro operators in paper 1,2
+</li>
+<li>Tiebreaking mechanism in paper 3
+</li>
+</ul>
+</li>
+<li><b><i>Give an answer</i> to why paper 1,2,3 perform good</b>
+</li>
+</ul>
+
+</div>
+
+<div class="alignright">
+<p>
+→ Unified, consistent thesis!
+</p>
+
+</div>
+
+<div class="larger">
+<div class="center">
+<p>
+Thank you for listening!
+</p>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Masataro Asai</p>
+<p class="date">Created: 2016-06-12 日 12:00</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

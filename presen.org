@@ -1,0 +1,409 @@
+#+title: Exploiting Search Space Structure in Classical Planning: Analyses and Algorithms (DC talk)
+#+author: Masataro Asai
+#+include: "head.org"
+#+LINK: img file:img/%s
+#+LINK: png file:img/%s.png
+#+LINK: jpg file:img/%s.jpg
+#+LINK: gif file:img/%s.gif
+
+#+BEGIN_outline-text-1
+15 min + 5 min question
+
+POSTER 4ft (122cm) wide x 6ft (183 cm) tall
+
+#+BEGIN_LARGER
+#+BEGIN_CENTER
+Masataro Asai
+
+2nd year in Ph.D program (2 years to go)
+
+University of Tokyo
+
+　
+
+Short talk (15min)
+#+END_CENTER
+#+END_LARGER
+#+END_outline-text-1
+
+* Overview
+
++ What I've been doing (5 min)
+  + primarily in classical planning
+  + Briefly summarize 3 papers
++ How to form a clean thesis & what I'm insterested in (10 min)
+  + To construct a consistent story →
+  + /Theory unifying all satisficing heuristic search/
+  + /4th paper/ : aiming to be a non ad-hoc macro paper
+
+* 
+
+#+BEGIN_XLARGE
+#+BEGIN_CENTER
+Prior Work
+#+END_CENTER
+#+END_XLARGE
+
+* CELL-ASSEMBLY system 
+
+#+BEGIN_NOTE
+Asai, M.; Fukunaga, A: 2014. Fully Automated Cyclic Planning for Large-Scale Manufacturing Domains. In ICAPS2014.
+#+END_NOTE
+
+[[png:assemble-icaps14-intro]]
+
+** Issues addressed
+
+[[png:assemble-icaps14]]
+
+* ICAPS15 paper
+
+#+BEGIN_RESUME
+In this work, we generalized the proposed method by detecting and
+categorizing the logical structure which forms each loop.
+For example, programs do not know that cars consists of several parts such as doors, engines and tires.
+#+END_RESUME
+
+[[png:assemble-keps14-icaps15]]
+
+#+BEGIN_NOTE
+Asai, M.; Fukunaga, A: 2015. Solving Large-Scale Planning Problems by Decomposition and Macro Generation. In ICAPS2015.
+#+END_NOTE
+
+* AAAI16 paper (visit my 2nd poster session)
+
+[[png:aaai16-1-1]]
+
+#+BEGIN_NOTE
+Asai, M.; Fukunaga, A: 2016. Tiebreaking Strategies for A* Search: How to Explore the Final Frontier. In AAAI-2016.
+#+END_NOTE
+
+** AAAI16 paper (visit my 2nd poster session)
+
+
+ [[png:aaai16-1-2]]
+
+ #+BEGIN_NOTE
+ Asai, M.; Fukunaga, A: 2016. Tiebreaking Strategies for A* Search: How to Explore the Final Frontier. In AAAI-2016.
+ #+END_NOTE
+
+** Investigating /h/-tiebreaking in A*
+
+[[png:aaai16-2]]
+
+** Investigating /h/-tiebreaking in A*
+
+[[png:aaai16-2-1]]
+
+** Investigating /h/-tiebreaking in A*
+
+[[png:aaai16-2-2]]
+
+** Investigating /h/ + LIFO/FIFO tiebreaking in A*
+
+[[png:plateau-3-0]]
+
+** Investigating /h/ + LIFO/FIFO tiebreaking in A*
+
+[[png:plateau-3-1]]
+
+** A* with /h/ + Depth Diversification
+
+[[png:aaai16-3]]
+
+annd "plateau search = satisficing planning"
+
+* 
+
+#+BEGIN_XLARGE
+#+BEGIN_CENTER
+Future Work
+
+　
+#+END_CENTER
+#+END_XLARGE
+
+　
+
+　
+
+* Earmuffs Required
+
+#+BEGIN_XLARGE
+
+#+BEGIN_CENTER
+Future Work
+
+== Research IDEAs : not yet fully developped
+#+END_CENTER
+#+BEGIN_ALIGNRIGHT
+
+#+END_ALIGNRIGHT
+#+END_XLARGE
+
+* Toward Thesis Proposals
+
+#+BEGIN_LARGER
+1st, 2nd paper: *Macros*, satisficing search
+
+3rd paper: A*, tiebreaking, *plateau*, optimising search
+
+#+BEGIN_ALIGNRIGHT
+→ Weak connections between the topics
+
+Requires a unified story
+#+END_ALIGNRIGHT
+
+#+BEGIN_CENTER
++ *(macro ∩ plateau analysis) == search space*
+#+END_CENTER
+#+END_LARGER
+
+
+* A* tiebreaking [RD RO] paper was about search space
+
+[[png:aaai16-3]]
+
+* Macro operators changes the search space structure
+
+[[png:macro/search0]]
+
+* Macro operators changes the search space structure
+
+[[png:macro/search1]]
+
+* Macro operators changes the search space structure :noexport:
+
+[[png:macro/search.2]]
+
+* Proposal: Unifying Framework for Analyzing Search Space
+
+[[png:triangle]]
+
+* Proposal: Unifying Framework for Analyzing Search Space
+
+[[png:triangle0]]
+
+* Proposal: Unifying Framework for Analyzing Search Space
+
+[[png:triangle1]]
+
+* 
+
+#+BEGIN_XLARGE
+#+BEGIN_CENTER
+Percolation Theory
+#+END_CENTER
+#+END_XLARGE
+
+** Percolation Theory                                              :noexport:
+
+ [[png:percolate/circuit]]
+
+** Example: Percolation in 2-dimentional grids
+
+ A node is either *occupied* or *unoccupied*
+
+ [[png:percolate/percolated0]]
+
+ #+BEGIN_ALIGNRIGHT
+ #+BEGIN_LARGER
+ + Key interst: *when/how* a graph percolates?
+ #+END_LARGER
+ #+END_ALIGNRIGHT
+
+** Bond (edge) / Site (node) percolation
+
+[[gif:static/site-bond]]
+
+** Percolation described by occupation ratio /r/
+
+ [[png:percolate/cluster0]]
+
+** Percolation described by occupation ratio /r/
+
+ [[png:percolate/cluster1]]
+
+** Percolation described by occupation ratio /r/
+
+[[png:percolate/cluster2]]
+
+** Percolation described by occupation ratio /r/
+
+Generates a connected cluster with complex shape
+
+[[png:percolate/cluster3]]
+
+** Phase Transition
+
+[[png:percolate/cluster4]]
+
+** Macros may be shifting the ratio to the right
+
+ [[png:percolate/cluster5]]
+
+** Forward Search : Increasing /r/ as the search progresses
+
+ [[png:percolate/cluster6]]
+
+** Open Questions
+
+ + *Prove the connection between macro-operators and critical value*
+   + I am testing if randomly generated *Junk Macros* improve the performance
+     + *Ongoing work --- /positive results/ (next slide)*
+ + *How /existing macro-approaches/ change the connectivity?*
+   + MacroFF(Botea05), Marvin(Coles04,07) MUM(Chrpa14), CAP(Asai15), BLOMA(Siddiqui15)
+ + *What is the /r_c/ of each domain?*
+   + critical value of Logistics is X, Barman is Y ...
+ + *At which /r/ does each search algorithm find a solution?*
+   + Lookahead search, GBFS, Type-GBFS, A*, Random Walk...
+
+*** Preliminary results on Junk Macros
+
+ [[png:percolate/junk]]
+
+ #+BEGIN_ALIGNRIGHT
+ Promising direction!
+ #+END_ALIGNRIGHT
+
+* Unifying Framework for Analyzing Search Space
+
+[[png:triangle2]]
+
+* 
+
+#+BEGIN_XLARGE
+#+BEGIN_CENTER
+Fractals
+#+END_CENTER
+#+END_XLARGE
+
+#+BEGIN_ALIGNRIGHT
+No time, only described briefly
+#+END_ALIGNRIGHT
+
+** Fractals 
+
+Sierpinsky's Gasket, Tree (L-system), Koch Curve
+
+
+#+BEGIN_CONTAINER-FLUID
+#+BEGIN_ROW-FLUID
+#+BEGIN_SPAN6
+[[gif:static/sierpinski]]
+#+END_SPAN6
+#+BEGIN_SPAN6
+[[gif:static/koch]]
+#+END_SPAN6
+#+END_ROW-FLUID
+#+END_CONTAINER-FLUID
+
+
+** Fractal Dimension: How many nodes are included when the */scale/* changes?
+
+Takes Fractional value; != Space Dimension
+
+[[png:fractals/dimention]]
+
+** Fractals are defined by generative rules: example
+
+ [[png:fractals/ba]]
+
+** Fractals are defined by generative rules: example
+
+ [[png:fractals/dla]]
+
+** Fractals are defined by generative rules: example
+
+ [[png:fractals/eden]]
+
+** */Search space/* is also defined by expansion rules
+
+ [[png:fractals/eden-2]]
+
+** Connections between Fractals and Search Algorithms
+
+[[png:fractals/fractal]]
+
+** Connections between Fractals and Search Algorithms
+
+[[png:fractals/fractal2]]
+
+** Connections between Fractals and Search Algorithms
+
+[[png:fractals/fractal3]]
+
+** Connections between Fractals and Percolation
+
+ [[png:fractals/cluster]]
+
+* Unifying Framework for Analyzing Search Space
+
+[[png:triangle3]]
+
+* Conclusion: Thesis Abstract
+
+#+BEGIN_LARGER
++ *Establish a framework* for analysing the search behavior based on percolation theory
++ *Propose paper 1,2,3*
++ *Analyze paper 1,2,3* using *percolation theory*
+  + Macro operators in paper 1,2
+  + Tiebreaking mechanism in paper 3
++ */Give an answer/ to why paper 1,2,3 perform good*
+#+END_LARGER
+
+#+BEGIN_ALIGNRIGHT
+→ Unified, consistent thesis!
+#+END_ALIGNRIGHT
+
+#+BEGIN_LARGER
+#+BEGIN_CENTER
+Thank you for listening!
+#+END_CENTER
+#+END_LARGER
+
+*             not-used                                             :noexport:
+
+** Meta-parameter which defines the shape: Fractal dimension
+
+ a statistical index of complexity comparing how detail in a pattern changes with the scale at which it is measured
+
+*** Computing the Fractal Dimension
+
+
+
+
+
+*** Connections between Fractals and Search Algorithms
+
+  [[png:fractals/fractal]]
+** Possible Benefits:
+
+ + More thoeries about macro operators. Only thing we know:
+   + "*Increases branching factor*"
+   + *!=* *effective* branching factor by heuristic search
+ + Understand Search Algorithms by the *shape of the explored space*
+   + What is the fundamental difference between 2 algorithms?
+** Effective Search Space
+
+ Search space evaluated by the search algorithm ⊆ (entire) search space
+
+ [[png:fractals/ess]]
+
+ Each search algorithm defines its */shape/*
+
+** Inherent Danger of Showing Research Ideas at DC                 :noexport:
+ 
+ I am inclined to continuing research after graduation as a PostDoc / maybe in industry, but showing too much
+ unreliable ideas here may cause this:
+
+ #+BEGIN_ALIGNRIGHT
+ (just be sure, I'm *not* claiming I am Einstein, no!)
+ #+END_ALIGNRIGHT
+
+ [[png:einstein]]
+
+ # + Do you want to hire people with crazy ideas? or
+ # + Do you want to hire people with safe ideas?
+ # + Depending on the answers, I should not show some part of the slides in this talk
+  

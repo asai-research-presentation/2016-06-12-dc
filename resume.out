@@ -1,0 +1,40 @@
+\BOOKMARK [1][-]{section.1}{1 Overview}{}% 1
+\BOOKMARK [1][-]{section.2}{2 Cell-Assembly system}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{2.1 Issues addressed}{section.2}% 3
+\BOOKMARK [1][-]{section.3}{3 ICAPS15 paper}{}% 4
+\BOOKMARK [1][-]{section.4}{4 AAAI16 paper \(visit my 2nd poster session\)}{}% 5
+\BOOKMARK [2][-]{subsection.4.1}{4.1 AAAI16 paper \(visit my 2nd poster session\)}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.2}{4.2 Investigating h-tiebreaking in A*}{section.4}% 7
+\BOOKMARK [2][-]{subsection.4.3}{4.3 Investigating h-tiebreaking in A*}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.4}{4.4 Investigating h-tiebreaking in A*}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.5}{4.5 Investigating h + LIFO/FIFO tiebreaking in A*}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.6}{4.6 Investigating h + LIFO/FIFO tiebreaking in A*}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.7}{4.7 A* with h + Depth Diversification}{section.4}% 12
+\BOOKMARK [1][-]{section.5}{5 Toward Thesis Proposals}{}% 13
+\BOOKMARK [1][-]{section.6}{6 Inherent Danger of Showing Research Ideas at DC}{}% 14
+\BOOKMARK [1][-]{section.7}{7 Danger Zone!}{}% 15
+\BOOKMARK [1][-]{section.8}{8 Background 1: A* [RD RO] paper was about search space}{}% 16
+\BOOKMARK [1][-]{section.9}{9 Background 2: Macro operators changes the search space structure}{}% 17
+\BOOKMARK [1][-]{section.10}{10 Background 2: Macro operators changes the search space structure}{}% 18
+\BOOKMARK [1][-]{section.11}{11 Unifying Framework : Discuss Search Space Theoretically}{}% 19
+\BOOKMARK [1][-]{section.12}{12 Unifying Framework : Discuss Search Space Theoretically}{}% 20
+\BOOKMARK [1][-]{section.13}{13 Unifying Framework : Discuss Search Space Theoretically}{}% 21
+\BOOKMARK [1][-]{section.14}{14 Percolation Theory -- Toward Planning Complexity}{}% 22
+\BOOKMARK [2][-]{subsection.14.1}{14.1 Occupation Ratio r}{section.14}% 23
+\BOOKMARK [2][-]{subsection.14.2}{14.2 Occupation Ratio r}{section.14}% 24
+\BOOKMARK [2][-]{subsection.14.3}{14.3 Occupation Ratio r}{section.14}% 25
+\BOOKMARK [2][-]{subsection.14.4}{14.4 Phase Transition}{section.14}% 26
+\BOOKMARK [2][-]{subsection.14.5}{14.5 Open Question}{section.14}% 27
+\BOOKMARK [2][-]{subsection.14.6}{14.6 Preliminary results on Junk Macros}{section.14}% 28
+\BOOKMARK [2][-]{subsection.14.7}{14.7 Macros may be shifting to the right}{section.14}% 29
+\BOOKMARK [2][-]{subsection.14.8}{14.8 Opposite : Randomly removing edges ― shifting to the left}{section.14}% 30
+\BOOKMARK [1][-]{section.15}{15 Unifying Framework : Discuss Search Space Theoretically}{}% 31
+\BOOKMARK [1][-]{section.16}{16 Fractals}{}% 32
+\BOOKMARK [2][-]{subsection.16.1}{16.1 Fractals}{section.16}% 33
+\BOOKMARK [2][-]{subsection.16.2}{16.2 Fractals}{section.16}% 34
+\BOOKMARK [2][-]{subsection.16.3}{16.3 Famous Fractals \(BA\)}{section.16}% 35
+\BOOKMARK [2][-]{subsection.16.4}{16.4 Connections between Fractals and Search Algorithms}{section.16}% 36
+\BOOKMARK [2][-]{subsection.16.5}{16.5 Connections between Fractals and Percolation}{section.16}% 37
+\BOOKMARK [1][-]{section.17}{17 Unifying Framework : Discuss Search Space Theoretically}{}% 38
+\BOOKMARK [1][-]{section.18}{18 Possible Benefits:}{}% 39
+\BOOKMARK [1][-]{section.19}{19 Conclusion}{}% 40
